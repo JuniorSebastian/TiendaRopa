@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios - Tienda de Ropa</title>
+
+    <!-- Bootstrap y estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #fdf6f9;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding-top: 200px; /* MÁS espacio para que no tape el contenido */
+        }
+
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            color: #ff3b8d !important;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ff3b8d !important;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            border-radius: 50px;
+            padding: 0.4rem 1.2rem;
+        }
+
+        .btn-primary {
+            background-color: #f39c12;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-warning {
+            background-color: #f1c40f;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color: #f39c12;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 3rem 1rem 2rem;
+        }
+    </style>
+</head>
+
+<body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">Sandra's</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i>Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/productos"><i class="bi bi-grid me-1"></i>Productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/categorias"><i class="bi bi-tags me-1"></i>Categorías</a></li>
+                <li class="nav-item"><a class="nav-link" href="/tallas"><i class="bi bi-rulers me-1"></i>Tallas</a></li>
+                <li class="nav-item"><a class="nav-link" href="/usuarios"><i class="bi bi-people me-1"></i>Usuarios</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTENIDO -->
+<div class="container text-center">
+    <h1>👤 Usuarios</h1>
+
+    <a href="/usuarios/nuevo" class="btn btn-primary mb-3">
+        <i class="bi bi-person-plus"></i> Nuevo Usuario
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.id}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellido}"></td>
+                <td th:text="${usuario.email}"></td>
+                <td th:text="${usuario.rol}"></td>
+                <td>
+                    <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

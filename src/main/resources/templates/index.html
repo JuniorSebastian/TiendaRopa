@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandra's Tienda de Ropa | Elegancia y Estilo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #fdf6f9;
+            font-family: 'Poppins', sans-serif;
+            color: #4a4a4a;
+        }
+
+        h1, h2, h3, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .text-pink {
+            color: #ff3b8d;
+        }
+
+        .bg-pink {
+            background-color: #ff3b8d;
+        }
+
+        .subtitle {
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: #9a9a9a;
+        }
+
+        /* Navbar estilizado */
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            color: #ff3b8d !important;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #555 !important;
+            font-weight: 500;
+            margin: 0 5px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ff3b8d !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #ff3b8d;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Header principal con animación */
+        .hero-section {
+            height: 80vh;
+            background: linear-gradient(135deg, rgba(255, 236, 241, 0.9) 0%, rgba(255, 200, 221, 0.8) 100%), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMIECpdMZpV16Q_k8ig6rvQRtg-IaJB8XNnWly82wEONtjyfwvQByR4df0WLGGCWRwrVI&usqp=CAU') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 60px 60px;
+            box-shadow: 0 10px 30px rgba(255, 59, 141, 0.1);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title span {
+            color: #ff3b8d;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            height: 8px;
+            width: 100%;
+            background-color: rgba(255, 59, 141, 0.2);
+            bottom: 10px;
+            left: 0;
+            z-index: -1;
+        }
+
+        .hero-text {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            background-color: #ff3b8d;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(255, 59, 141, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(255, 59, 141, 0.4);
+            background-color: #ff5ca9;
+        }
+
+        /* Animaciones para elementos decorativos */
+        .floating-shape {
+            position: absolute;
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        .shape-1 {
+            top: 20%;
+            right: 10%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            bottom: 15%;
+            right: 20%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-3 {
+            top: 30%;
+            left: 10%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Sección de categorías */
+        .categories-section {
+            padding: 5rem 0;
+        }
+
+        .category-card {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            height: 350px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .category-card:hover .category-img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            padding: 40px 20px 20px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .category-overlay {
+            padding-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Productos destacados */
+        .featured-products {
+            padding: 5rem 0;
+            background-color: #fff;
+            border-radius: 60px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            height: 5px;
+            width: 80px;
+            background-color: #ff3b8d;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .product-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img-container {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #ff3b8d;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .product-info {
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff3b8d;
+            margin-bottom: 15px;
+        }
+
+        .product-btn {
+            background-color: transparent;
+            color: #ff3b8d;
+            border: 2px solid #ff3b8d;
+            border-radius: 50px;
+            padding: 8px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .product-btn:hover {
+            background-color: #ff3b8d;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Banner de ofertas */
+        .promo-banner {
+            background: linear-gradient(135deg, #ff3b8d 0%, #ff7eb3 100%);
+            padding: 4rem;
+            border-radius: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(255, 59, 141, 0.2);
+            margin: 5rem 0;
+        }
+
+        .promo-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .promo-badge {
+            background-color: white;
+            color: #ff3b8d;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .promo-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .promo-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .promo-btn {
+            background-color: white;
+            color: #ff3b8d;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 35px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .promo-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .promo-img {
+            position: absolute;
+            right: -80px;
+            bottom: -80px;
+            width: 350px;
+            height: 350px;
+            object-fit: contain;
+            opacity: 0.2;
+            transform: rotate(15deg);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 0 2rem;
+            border-radius: 60px 60px 0 0;
+            margin-top: 5rem;
+        }
+
+        .footer-title {
+            color: #ff3b8d;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-text {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: #ff3b8d;
+            transform: translateY(-3px);
+        }
+
+        .footer-links h5 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: #ff3b8d;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff3b8d;
+            padding-left: 5px;
+        }
+
+        .newsletter-form {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .newsletter-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: #ff3b8d;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #ff5ca9;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Animaciones al hacer scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsividad */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-section {
+                height: auto;
+                padding: 5rem 0;
+            }
+
+            .category-card {
+                height: 280px;
+            }
+
+            .promo-img {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-text {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .promo-banner {
+                padding: 3rem 2rem;
+            }
+
+            .promo-title {
+                font-size: 2rem;
+            }
+
+            .footer {
+                text-align: center;
+            }
+
+            .footer-links h5::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .category-card {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Sandra's</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i>Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productos"><i class="bi bi-grid me-1"></i>Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categorias"><i class="bi bi-tags me-1"></i>Categorías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tallas"><i class="bi bi-rulers me-1"></i>Tallas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/usuarios"><i class="bi bi-people me-1"></i>Usuarios</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-content">
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="subtitle mb-2">Tu estilo, tu elección</p>
+                <h1 class="hero-title">Descubre la <span>elegancia</span> en cada detalle</h1>
+                <p class="hero-text">Bienvenido a Sandra's, donde la moda se encuentra con la personalidad. Explora nuestra colección exclusiva diseñada para destacar tu estilo único.</p>
+                <a href="/productos" class="btn hero-btn">Explorar Colección <i class="bi bi-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formas decorativas animadas -->
+    <svg class="floating-shape shape-1" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" fill="#ff3b8d" fill-opacity="0.2"/>
+    </svg>
+    <svg class="floating-shape shape-2" width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="70" height="70" rx="15" fill="#ff3b8d" fill-opacity="0.2"/>
+    </svg>
+    <svg class="floating-shape shape-3" width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="60" cy="30" rx="60" ry="30" fill="#ff3b8d" fill-opacity="0.2"/>
+    </svg>
+</section>
+
+<!-- Carrusel de Productos Destacados -->
+<section class="featured-products">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8 text-center">
+                <p class="subtitle">Lo mejor de nuestra tienda</p>
+                <h2 class="section-title">Productos Destacados</h2>
+            </div>
+        </div>
+
+        <!-- Carrusel Automático -->
+        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                <!-- Primera slide -->
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://i.pinimg.com/originals/d1/47/4c/d1474ce9444486def8f34eec83bf9995.jpg" class="product-img" alt="Producto 1">
+                                    <span class="product-badge">Destacado</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Vestido Elegante</h3>
+                                    <p class="product-price">S/ 129.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://m.media-amazon.com/images/I/610A1fXineL._AC_UY1000_.jpg" class="product-img" alt="Producto 2">
+                                    <span class="product-badge">Nuevo</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Blusa Primavera</h3>
+                                    <p class="product-price">S/ 89.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://thefeelz.store/cdn/shop/files/coquette-bow-jeans-pink-bow-embroidery.jpg?v=1729754092" class="product-img" alt="Producto 3">
+                                    <span class="product-badge">Popular</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Jeans Premium</h3>
+                                    <p class="product-price">S/ 159.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://m.media-amazon.com/images/I/61qhlHM2h9L._AC_UY1000_.jpg" class="product-img" alt="Producto 4">
+                                    <span class="product-badge">Oferta</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Falda Plisada</h3>
+                                    <p class="product-price">S/ 99.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segunda slide -->
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://oechsle.vteximg.com.br/arquivos/ids/19651736-1000-1000/imageUrl_1.jpg?v=638667431079000000" class="product-img" alt="Producto 5">
+                                    <span class="product-badge">Exclusivo</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Bolso Elegante</h3>
+                                    <p class="product-price">S/ 199.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://m.media-amazon.com/images/I/31SaGiQNg+L._AC_SY900_.jpg" class="product-img" alt="Producto 6">
+                                    <span class="product-badge">Tendencia</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Zapatillas Urbanas</h3>
+                                    <p class="product-price">S/ 179.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://cdnx.jumpseller.com/aesthetic-chile/image/45802379/resize/1000/1000?1708819108" class="product-img" alt="Producto 7">
+                                    <span class="product-badge">Limited</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Chaqueta Denim</h3>
+                                    <p class="product-price">S/ 229.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs5uKlNjcC7W0p4mhZk1eKLT4FyXar-oPnYg&s" class="product-img" alt="Producto 8">
+                                    <span class="product-badge">-25%</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Conjunto Casual</h3>
+                                    <p class="product-price">S/ 249.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tercera slide -->
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://m.media-amazon.com/images/I/61XK94UsbwL._AC_SL1500_.jpg" class="product-img" alt="Producto 9">
+                                    <span class="product-badge">Favorito</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Suéter Tejido</h3>
+                                    <p class="product-price">S/ 149.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiE2JQheON3fmrePwu_QMayl68fayQyDCmMw&s" class="product-img" alt="Producto 10">
+                                    <span class="product-badge">Top</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Vestido Cóctel</h3>
+                                    <p class="product-price">S/ 189.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://www.favrspecs.com/cdn-cgi/image/width=1920,quality=75,format=auto,fit=scale-down,background=%23F8F8F8/media/product-variants/11585/5jIEy9fROfRBbFcY/sunglasses-barton-perreira-heroine-chic-gold-smolder-ar-front.png" class="product-img" alt="Producto 11">
+                                    <span class="product-badge">Nuevo</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Gafas de Sol</h3>
+                                    <p class="product-price">S/ 119.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img-container">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY3fi_LrH19GnQHLYSkXstva3YnWO9hCvNAw&s" class="product-img" alt="Producto 12">
+                                    <span class="product-badge">Exclusivo</span>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">Reloj Fashion</h3>
+                                    <p class="product-price">S/ 299.90</p>
+                                    <a href="#" class="product-btn">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles del carrusel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-pink rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-pink rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+            <!-- Indicadores del carrusel -->
+            <div class="carousel-indicators position-relative mt-4">
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active bg-pink" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" class="bg-pink" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" class="bg-pink" aria-label="Slide 3"></button>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/productos" class="btn btn-lg px-4 py-2" style="background-color: #ff3b8d; color: white; border-radius: 30px; box-shadow: 0 5px 15px rgba(255, 59, 141, 0.3);">
+                Ver todos los productos <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Categorías con carrusel automático -->
+<section class="categories-section py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8 text-center">
+                <p class="subtitle" style="font-weight: 300; letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem; color: #9a9a9a;">Explora nuestras</p>
+                <h2 class="section-title" style="position: relative; display: inline-block; color: #ff3b8d; font-size: 2.5rem; margin-bottom: 20px;">Categorías Destacadas</h2>
+            </div>
+        </div>
+
+        <!-- Carrusel de categorías -->
+        <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner">
+                <!-- Primera slide de categorías -->
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="category-card" style="border-radius: 20px; overflow: hidden; position: relative; height: 350px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;">
+                                <img src="https://i.pinimg.com/736x/df/e8/c4/dfe8c43b6daf1b78acfea299d8da69f1.jpg" alt="Moda Mujer" class="category-img" style="height: 100%; width: 100%; object-fit: cover; transition: all 0.5s ease;">
+                                <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 40px 20px 20px; color: white;">
+                                    <h3 class="category-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Moda Mujer</h3>
+                                    <p class="category-text" style="opacity: 0.8; font-size: 0.9rem;">Elegancia y estilo para cada ocasión</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="category-card" style="border-radius: 20px; overflow: hidden; position: relative; height: 350px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;">
+                                <img src="https://www.shutterstock.com/image-photo/fashion-blogger-workspace-laptop-female-260nw-1077957491.jpg" alt="Accesorios" class="category-img" style="height: 100%; width: 100%; object-fit: cover; transition: all 0.5s ease;">
+                                <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 40px 20px 20px; color: white;">
+                                    <h3 class="category-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Accesorios</h3>
+                                    <p class="category-text" style="opacity: 0.8; font-size: 0.9rem;">El detalle que hace la diferencia</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="category-card" style="border-radius: 20px; overflow: hidden; position: relative; height: 350px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg2-c6JODJ4Lt-Rk4UyhKK28972M-yL5g6XA&s" alt="Calzado" class="category-img" style="height: 100%; width: 100%; object-fit: cover; transition: all 0.5s ease;">
+                                <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 40px 20px 20px; color: white;">
+                                    <h3 class="category-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Calzado</h3>
+                                    <p class="category-text" style="opacity: 0.8; font-size: 0.9rem;">Comodidad y estilo a cada paso</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segunda slide de categorías -->
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="category-card" style="border-radius: 20px; overflow: hidden; position: relative; height: 350px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLejUmKaHqBh8nPtgdKQ85B2eQHdxRMEktgw&s" alt="Vestidos" class="category-img" style="height: 100%; width: 100%; object-fit: cover; transition: all 0.5s ease;">
+                                <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 40px 20px 20px; color: white;">
+                                    <h3 class="category-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Vestidos</h3>
+                                    <p class="category-text" style="opacity: 0.8; font-size: 0.9rem;">Para ocasiones especiales</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="category-card" style="border-radius: 20px; overflow: hidden; position: relative; height: 350px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgADDJYc7Hp9pwVfvrUOyUKXTJ0HJcqsfNdw&s" alt="Jeans" class="category-img" style="height: 100%; width: 100%; object-fit: cover; transition: all 0.5s ease;">
+                                <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 40px 20px 20px; color: white;">
+                                    <h3 class="category-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Jeans</h3>
+                                    <p class="category-text" style="opacity: 0.8; font-size: 0.9rem;">El básico perfecto</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="category-card" style="border-radius: 20px; overflow: hidden; position: relative; height: 350px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;">
+                                <img src="https://http2.mlstatic.com/D_NQ_NP_707594-MLM76635981502_062024-O.webp    " alt="Deportiva" class="category-img" style="height: 100%; width: 100%; object-fit: cover; transition: all 0.5s ease;">
+                                <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 40px 20px 20px; color: white;">
+                                    <h3 class="category-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Deportiva</h3>
+                                    <p class="category-text" style="opacity: 0.8; font-size: 0.9rem;">Activa y moderna</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles del carrusel de categorías -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-pink rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-pink rounded-circle p-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+            <!-- Indicadores del carrusel de categorías -->
+            <div class="carousel-indicators position-relative mt-4">
+                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="0" class="active bg-pink" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="1" class="bg-pink" aria-label="Slide 2"></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Agregar el script de Bootstrap para que funcionen los carruseles -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script para hacer que los carruseles se muevan automáticamente -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar carruseles con opciones
+        var productCarousel = new bootstrap.Carousel(document.getElementById('productCarousel'), {
+            interval: 3000,
+            wrap: true
+        });
+
+        var categoryCarousel = new bootstrap.Carousel(document.getElementById('categoryCarousel'), {
+            interval: 4000,
+            wrap: true
+        });
+    });
+</script>
+
+<!-- Banner de promoción -->
+<section class="container">
+    <div class="promo-banner">
+        <div class="row">
+            <div class="col-lg-6 promo-content">
+                <span class="promo-badge">OFERTA ESPECIAL</span>
+                <h2 class="promo-title">¡Hasta 40% de descuento!</h2>
+                <p class="promo-text">En nuestra nueva colección de temporada. Ofertas por tiempo limitado, ¡no te lo pierdas!</p>
+                <a href="/productos" class="promo-btn">Comprar ahora</a>
+            </div>
+        </div>
+        <img src="https://pbs.twimg.com/media/D0BGhdNWsAAEjhJ.png" alt="Promoción" class="promo-img">
+    </div>
+</section>
+
+<!-- Características -->
+<!-- Nuestras Ventajas -->
+<section class="container py-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 text-center">
+            <p class="subtitle">Por qué elegirnos</p>
+            <h2 class="section-title mb-4">Nuestras Ventajas</h2>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-3">
+        <!-- Card 1 -->
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow-lg border-0">
+                <div class="card-body py-5">
+                    <i class="bi bi-truck fs-1 text-danger mb-3"></i>
+                    <h5 class="card-title">Envío Rápido</h5>
+                    <p class="card-text text-muted">Recibe tus productos en tiempo récord en cualquier parte del país.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow-lg border-0">
+                <div class="card-body py-5">
+                    <i class="bi bi-shield-check fs-1 text-success mb-3"></i>
+                    <h5 class="card-title">Compra Segura</h5>
+                    <p class="card-text text-muted">Protección total en tus compras con sistema de seguridad avanzado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow-lg border-0">
+                <div class="card-body py-5">
+                    <i class="bi bi-gift fs-1 text-primary mb-3"></i>
+                    <h5 class="card-title">Promociones Exclusivas</h5>
+                    <p class="card-text text-muted">Accede a descuentos únicos y colecciones especiales todo el año.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Testimonios -->
+<!-- Testimonios -->
+<section class="container py-5 bg-light">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <p class="subtitle">Lo que nuestros clientes dicen</p>
+            <h2 class="section-title">Testimonios</h2>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <!-- Testimonio 1 -->
+        <div class="col-md-4 text-center mb-4">
+            <div class="testimonial-card p-4 bg-white shadow-sm rounded">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRduGpsk75-PPQpX5duhr2mjCG0XQCUMHiMAg&s" alt="María" class="rounded-circle mb-3" width="80" height="80">
+                <i class="bi bi-quote text-pink" style="font-size: 2rem;"></i>
+                <p class="testimonial-text mt-3">"Excelente tienda. Los productos son de calidad y me encantó el servicio al cliente."</p>
+                <div class="text-warning mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                </div>
+                <p class="customer-name text-muted">María González</p>
+            </div>
+        </div>
+
+        <!-- Testimonio 2 -->
+        <div class="col-md-4 text-center mb-4">
+            <div class="testimonial-card p-4 bg-white shadow-sm rounded">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8wWTqTlISX5BPUUNQxIdqvAidp5txGkyDKQ&s" alt="Carlos" class="rounded-circle mb-3" width="80" height="80">
+                <i class="bi bi-quote text-pink" style="font-size: 2rem;"></i>
+                <p class="testimonial-text mt-3">"¡Me encantaron las ofertas y los precios! Definitivamente volveré a comprar aquí."</p>
+                <div class="text-warning mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="customer-name text-muted">Carlos Herrera</p>
+            </div>
+        </div>
+
+        <!-- Testimonio 3 -->
+        <div class="col-md-4 text-center mb-4">
+            <div class="testimonial-card p-4 bg-white shadow-sm rounded">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnOqVEEe3SPBsux8AGMh-bwApxRCoAjyX6TA&s" alt="Laura" class="rounded-circle mb-3" width="80" height="80">
+                <i class="bi bi-quote text-pink" style="font-size: 2rem;"></i>
+                <p class="testimonial-text mt-3">"Gran experiencia de compra, los productos llegaron rápido y en perfecto estado."</p>
+                <div class="text-warning mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star"></i>
+                </div>
+                <p class="customer-name text-muted">Laura Fernández</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
